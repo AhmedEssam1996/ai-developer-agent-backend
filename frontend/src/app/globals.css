@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+* {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-base-950 text-ink-100 antialiased;
+  font-feature-settings: "cv11", "ss01";
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle ambient background — restrained, not neon. */
+.app-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: theme("backgroundImage.aurora");
+  opacity: 0.9;
+  z-index: 0;
+}
+
+::selection {
+  background: rgba(109, 139, 255, 0.3);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.16);
+  background-clip: padding-box;
+}
+
+@layer components {
+  .panel {
+    @apply rounded-2xl border border-white/[0.06] bg-base-850/70 shadow-panel backdrop-blur-xl;
+  }
+  .panel-hover {
+    @apply transition-colors hover:border-white/[0.1] hover:bg-base-800/70;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-medium;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-3.5 py-2 text-sm font-medium
+           transition-all duration-150 focus-visible:outline-none focus-visible:ring-2
+           focus-visible:ring-accent/60 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-white hover:bg-accent-deep active:scale-[0.99];
+  }
+  .btn-ghost {
+    @apply btn border border-white/[0.08] bg-white/[0.02] text-ink-200 hover:bg-white/[0.05] hover:text-ink-50;
+  }
+  .btn-danger {
+    @apply btn border border-signal-urgent/30 bg-signal-urgent/10 text-signal-urgent hover:bg-signal-urgent/20;
+  }
+  .input {
+    @apply w-full rounded-xl border border-white/[0.08] bg-base-900/80 px-3.5 py-2.5 text-sm
+           text-ink-100 placeholder:text-ink-500 outline-none transition
+           focus:border-accent/50 focus:ring-2 focus:ring-accent/25;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-500;
+  }
+  .skeleton {
+    @apply relative overflow-hidden rounded-lg bg-white/[0.04];
+  }
+  .skeleton::after {
+    content: "";
+    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/[0.06] to-transparent animate-shimmer;
+  }
+  .section-title {
+    @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-500;
+  }
+}
+
+/* Markdown rendering for the agent */
+.prose-agent {
+  @apply text-[14.5px] leading-relaxed text-ink-200;
+}
+.prose-agent h1 {
+  @apply mb-3 mt-5 text-xl font-semibold text-ink-50;
+}
+.prose-agent h2 {
+  @apply mb-2.5 mt-5 text-[17px] font-semibold tracking-tight text-ink-50;
+}
+.prose-agent h3 {
+  @apply mb-2 mt-4 text-[15px] font-semibold text-ink-100;
+}
+.prose-agent p {
+  @apply my-2.5;
+}
+.prose-agent ul {
+  @apply my-2.5 list-disc space-y-1.5 pl-5 marker:text-ink-500;
+}
+.prose-agent ol {
+  @apply my-2.5 list-decimal space-y-1.5 pl-5 marker:text-ink-500;
+}
+.prose-agent a {
+  @apply text-accent-soft underline decoration-accent/40 underline-offset-2 hover:decoration-accent;
+}
+.prose-agent code {
+  @apply rounded-md border border-white/[0.06] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[12.5px] text-teal;
+}
+.prose-agent pre {
+  @apply my-3 overflow-x-auto rounded-xl border border-white/[0.06] bg-base-950/80 p-4;
+}
+.prose-agent pre code {
+  @apply border-0 bg-transparent p-0 text-[12.5px];
+}
+.prose-agent table {
+  @apply my-3 w-full border-collapse overflow-hidden rounded-xl text-[13px];
+}
+.prose-agent th {
+  @apply border border-white/[0.06] bg-white/[0.03] px-3 py-2 text-left font-semibold text-ink-100;
+}
+.prose-agent td {
+  @apply border border-white/[0.06] px-3 py-2;
+}
+.prose-agent blockquote {
+  @apply my-3 border-l-2 border-accent/40 pl-4 text-ink-300;
+}
+.prose-agent hr {
+  @apply my-5 border-white/[0.06];
+}
